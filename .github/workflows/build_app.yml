@@ -1,0 +1,23 @@
+name: "Build App"
+# Build App runs in the forked repo with
+# any push to main or semver tag.
+# Tagged pushes will automatically create a release
+# with the built artifacts.
+#
+# See: https://www.appfair.net
+on:
+  push:
+    branches: [ main ]
+    tags: "[0-9]+.[0-9]+.[0-9]+"
+
+jobs:
+  call-workflow:
+    uses: appfair/fairground/.github/workflows/fair.yml@main
+    secrets:
+      # These optional secrets can be added for app notarization.
+      NOTARY_TEAMID: ${{ secrets.NOTARY_TEAMID }}
+      NOTARY_USERID: ${{ secrets.NOTARY_USERID }}
+      NOTARY_PASSWORD: ${{ secrets.NOTARY_PASSWORD }}
+      NOTARY_CERTKEY_P12_BASE64: ${{ secrets.NOTARY_CERTKEY_P12_BASE64 }}
+      NOTARY_CERTKEY_PASSWORD: ${{ secrets.NOTARY_CERTKEY_PASSWORD }}
+
